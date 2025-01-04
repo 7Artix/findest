@@ -34,9 +34,13 @@ struct FolderView: View {
                         Text(file)
                     }
                 }
+                .listStyle(PlainListStyle())
+                .cornerRadius(10)
+                //.padding(1)
+                //.shadow(radius: 10)
             }
             .frame(minWidth: 200, minHeight: 200)
-            .border(Color.gray)
+            //.border(Color.gray)
         }
     func fileList() -> [String] {
             do {
