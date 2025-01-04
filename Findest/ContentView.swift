@@ -9,14 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            HStack {
+                VStack {
+                    FolderView(folderPath: "/")
+                    FolderView(folderPath: "/Applications")
+                }
+                VStack {
+                    FolderView(folderPath: "/Users")
+                    FolderView(folderPath: "/Library")
+                }
+            }
+            .padding()
         }
-        .padding()
-    }
+}
+
+struct FolderView: View {
+    let folderPath: String
+    var body: some View {
+            VStack {
+                Text("Folder: \(folderPath)")
+                    .font(.headline)
+                List {
+                    ForEach(fileList(), id: \.self) { file in
+                        Text(file)
+                    }
+                }
+            }
+            .frame(minWidth: 200, minHeight: 200)
+            .border(Color.gray)
+        }
+    func fileList() -> [String] {
+            do {
+                return try FileManager.default.contentsOfDirectory(atPath: folderPath)
+            } catch {
+                return ["Error loading folder"]
+            }
+        }
 }
 
 #Preview {
